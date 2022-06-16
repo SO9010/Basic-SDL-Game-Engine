@@ -29,6 +29,7 @@ class gWindow{
     SDL_Renderer *gRender = 0;
     SDL_Event event;
     std::vector <SDL_Texture *> imageList;
+    std::vector <SDL_Rect> posList;
     bool gRun = false;
 };
 

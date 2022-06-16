@@ -20,7 +20,6 @@ int main(){
 
     while(gGame->running()){
         gGame->handleEvent();
-        bob.addObjToRen();
         gGame->render();
     }
     return 0;

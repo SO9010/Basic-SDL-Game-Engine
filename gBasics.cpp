@@ -34,8 +34,17 @@ void gWindow::render(){
 
     SDL_SetRenderDrawColor(gRender, 255, 255, 255, 255);
     SDL_RenderDrawRect(gRender, &rect);
+    int vecSize = imageList.size() +1 ;
+    for(int i = 0; i < vecSize; i++){
 
-    .draw();
+        if(&imageList[i] != NULL){
+        std::cout << "Hellp image is null at draw" << std::endl;
+        SDL_RenderCopy(gRender, imageList[i], &posList[i], NULL);
+        }
+        else{
+            std::cout << "Hellp image is null at draw" << std::endl;
+        }
+    }
 
     SDL_SetRenderDrawColor(gRender, 11, 64, 121, 255);
 
@@ -92,19 +101,13 @@ bool bObj::loadImage(std::string filename){
         }
     }
     return false;
-    std::cout << "fasdsa" << std::endl;
+        std::cout << "Hellp image is null at load" << std::endl;
+
 }
 
-void bObj::draw(){
-    if(image != NULL){
-        SDL_RenderCopy(gRender, image, NULL, &pos);
-    }
-    else{
-        std::cout << "Hellp image is null at draw" << std::endl;
-    }
-}
 void bObj::addObjToRen(){
-    //imageList.push_back(this->draw());
+    imageList.push_back(image);
+    posList.push_back(pos);
 }
 
 void bObj::setRenderer(SDL_Renderer *destination){
