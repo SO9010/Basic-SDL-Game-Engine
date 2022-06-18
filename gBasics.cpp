@@ -4,6 +4,12 @@
 *   Basic gWindow functions   *
 *                             */
 
+  SDL_Window *window = 0;
+    SDL_Renderer *gRender = 0;
+   std::vector <SDL_Texture *> imageList ;
+    std::vector <std::string> asdsdg = {"123", "234"};
+    std::vector <SDL_Rect> posList;
+
 gWindow::gWindow(){
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG);
@@ -17,7 +23,7 @@ gWindow::~gWindow(){
     std::cout << "Good bye!" << std::endl;
 }
 
-bool gWindow::gInit(const char* title, int xpos, int ypos, int x, int y, int flags){
+void gWindow::gInit(const char* title, int xpos, int ypos, int x, int y, int flags){
         window = SDL_CreateWindow(title, xpos, ypos, x, y, flags);
         gRender = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 }
@@ -34,17 +40,17 @@ void gWindow::render(){
 
     SDL_SetRenderDrawColor(gRender, 255, 255, 255, 255);
     SDL_RenderDrawRect(gRender, &rect);
-    int vecSize = imageList.size() +1 ;
-    for(int i = 0; i < vecSize; i++){
+    std::cout << imageList.size() << std::endl;
 
+    int vecSize = imageList.size();
+    for(int i = 0; i < vecSize; i++){
         if(&imageList[i] != NULL){
-        std::cout << "Hellp image is null at draw" << std::endl;
         SDL_RenderCopy(gRender, imageList[i], &posList[i], NULL);
         }
         else{
-            std::cout << "Hellp image is null at draw" << std::endl;
-        }
-    }
+            //std::cout << "Hellp image is null at draw" << std::endl;
+        } 
+    } 
 
     SDL_SetRenderDrawColor(gRender, 11, 64, 121, 255);
 
@@ -94,6 +100,7 @@ bObj::~bObj(){                           //basic initiliser
 bool bObj::loadImage(std::string filename){
     SDL_Surface *temp = IMG_Load(filename.c_str());
     if(temp != NULL){
+
         image = SDL_CreateTextureFromSurface(gRender, temp);
         SDL_FreeSurface(temp);
         if(image != NULL){ 
@@ -106,13 +113,14 @@ bool bObj::loadImage(std::string filename){
 }
 
 void bObj::addObjToRen(){
+
     imageList.push_back(image);
+    
     posList.push_back(pos);
+
+
 }
 
-void bObj::setRenderer(SDL_Renderer *destination){
-    gRender = destination;
-}
 
 void bObj::setSize(int w, int h){
     pos.w = w;

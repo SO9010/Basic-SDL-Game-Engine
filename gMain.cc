@@ -1,14 +1,13 @@
 #include "gBasics.h"
 
 gWindow* gGame = 0;
-SDL_Renderer *screen = 0;
 
 int main(){
 
     bObj bob;
-    bob.setRenderer(screen);
     bob.loadImage("heart.png");
     bob.setPos(50, 50);
+    bob.addObjToRen();
     bob.setSize(60, 87);
     
     gGame = new gWindow();

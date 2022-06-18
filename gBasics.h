@@ -12,12 +12,13 @@
 *     Window Section    *      
 *                       */
 
+
 class gWindow{
     public:
     gWindow();
     ~gWindow();
 
-    bool gInit(const char* title, int xpos, int ypos, int x, int y, int flags);
+    void gInit(const char* title, int xpos, int ypos, int x, int y, int flags);
     bool running();
     void render();
     void handleEvent();
@@ -25,11 +26,9 @@ class gWindow{
     void frameRate();
 
     protected:
-    SDL_Window *window = 0;
-    SDL_Renderer *gRender = 0;
+  
     SDL_Event event;
-    std::vector <SDL_Texture *> imageList;
-    std::vector <SDL_Rect> posList;
+ 
     bool gRun = false;
 };
 
