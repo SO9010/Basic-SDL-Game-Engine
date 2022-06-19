@@ -1,14 +1,19 @@
 #include "gBasics.h"
 
 /*                            *
-*   Basic gWindow functions   *
+*           GLOBALS           *
 *                             */
 
-  SDL_Window *window = 0;
-    SDL_Renderer *gRender = 0;
-   std::vector <SDL_Texture *> imageList ;
-    std::vector <std::string> asdsdg = {"123", "234"};
-    std::vector <SDL_Rect> posList;
+
+SDL_Window *window;
+SDL_Renderer *gRender;
+
+std::vector <SDL_Texture *> imageList ;
+std::vector <SDL_Rect> posList;
+
+/*                            *
+*   Basic gWindow functions   *
+*                             */
 
 gWindow::gWindow(){
     SDL_Init(SDL_INIT_EVERYTHING);
@@ -32,34 +37,32 @@ void gWindow::render(){
 
     SDL_RenderClear(gRender);
 
-    SDL_Rect rect;
-    rect.x = 250;
-    rect.y = 150;
-    rect.w = 200;
-    rect.h = 200;
-
-    SDL_SetRenderDrawColor(gRender, 255, 255, 255, 255);
-    SDL_RenderDrawRect(gRender, &rect);
-    std::cout << imageList.size() << std::endl;
-
+    //Draw section 
+    
     int vecSize = imageList.size();
     for(int i = 0; i < vecSize; i++){
         if(&imageList[i] != NULL){
-        SDL_RenderCopy(gRender, imageList[i], &posList[i], NULL);
+        if(SDL_RenderCopy(gRender, imageList[i], &posList[i], NULL) == 0){
+            std::cout << "Hellp image is null at draw" << std::endl;
+        }
         }
         else{
-            //std::cout << "Hellp image is null at draw" << std::endl;
+            std::cout << "Hellp image is null at draw" << std::endl;
         } 
     } 
-
     SDL_SetRenderDrawColor(gRender, 11, 64, 121, 255);
 
     SDL_RenderPresent(gRender);
 }
 
+void gWindow::setRenderer(SDL_Renderer *destination){
+    gRender = destination;
+}
+
 bool gWindow::running(){
     return gRun;
 }
+
 void gWindow::handleEvent(){
      SDL_Event ev;
     if(SDL_PollEvent(&ev)){
@@ -67,6 +70,9 @@ void gWindow::handleEvent(){
         {
         case SDL_QUIT:
             gRun = false;
+            IMG_Quit();
+            SDL_Quit();
+            std::cout << "Good bye!" << std::endl;
             break;
         case SDL_MOUSEBUTTONUP:
             break;
@@ -98,29 +104,26 @@ bObj::~bObj(){                           //basic initiliser
 }
 
 bool bObj::loadImage(std::string filename){
-    SDL_Surface *temp = IMG_Load(filename.c_str());
-    if(temp != NULL){
+    SDL_Surface *temp = IMG_Load("img.png");
 
+    if(temp != NULL){
         image = SDL_CreateTextureFromSurface(gRender, temp);
         SDL_FreeSurface(temp);
         if(image != NULL){ 
             return true;
         }
     }
+    std::cout << "Help " + filename + " is null at load" + "\nERROR MESSAGE IS: " + IMG_GetError() << std::endl;
     return false;
-        std::cout << "Hellp image is null at load" << std::endl;
-
 }
 
 void bObj::addObjToRen(){
 
     imageList.push_back(image);
-    
     posList.push_back(pos);
 
 
 }
-
 
 void bObj::setSize(int w, int h){
     pos.w = w;

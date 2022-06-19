@@ -106,11 +106,11 @@ void item::draw(){
         std::cout << "IMAGE IS FUCKED AT DRAW\n";
     }
 }
-
+/*
 void item::update(int tick){
     oldTick = tick;
 }
-
+*/
 ////////////// CLASS ANIMATION 
 animation::animation(){
 

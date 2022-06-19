@@ -17,18 +17,17 @@ class gWindow{
     public:
     gWindow();
     ~gWindow();
-
     void gInit(const char* title, int xpos, int ypos, int x, int y, int flags);
     bool running();
     void render();
+    void setRenderer(SDL_Renderer *destination);
+    void setWindow(SDL_Window *destination);
     void handleEvent();
     void update();
     void frameRate();
 
     protected:
-  
     SDL_Event event;
- 
     bool gRun = false;
 };
 
@@ -36,16 +35,15 @@ class gWindow{
 *    Objects section    *      
 *                       */
                                         
-class bObj:public gWindow{              //basic object
+class bObj{              //basic object
     public:
     bObj();
     ~bObj();
-    void setRenderer(SDL_Renderer *destination);
     void addObjToRen();
     int colX, colY;                     //here is where we define the hit box
     bool collision = true;              //collision detection (auto set to true)
     bool getCollision(bObj* other);
-    void draw();
+    bool draw = true;
     bool loadImage(std::string filename);
     int startX, startY;
     int speed;
